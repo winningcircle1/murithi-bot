@@ -77,6 +77,15 @@
             &__list {
                 background: var(--general-section-1);
                 justify-content: start;
+                // Reserve space for the fixed-width Run panel (36.6rem + 1.6rem
+                // inset) on desktop, and allow horizontal scroll/drag so every
+                // tab stays reachable instead of running underneath the panel.
+                @include desktop-screen {
+                    margin-inline-end: 38.2rem;
+                    overflow-x: auto;
+                    flex-wrap: nowrap;
+                    scrollbar-width: thin;
+                }
 
                 @include mobile-or-tablet-screen {
                     overflow-x: auto;

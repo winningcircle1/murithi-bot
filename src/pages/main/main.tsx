@@ -84,7 +84,7 @@ const AppWrapper = observer(() => {
     const { clear } = summary_card;
     const { DASHBOARD, BOT_BUILDER, MANUAL_TRADING } = DBOT_TABS;
     const init_render = React.useRef(true);
-    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial', 'free_bots', 'analysis_tool', 'manual_trading'];
+    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial', 'free_bots', 'manual_trading', 'analysis_tool'];
     const { isDesktop } = useDevice();
     const location = useLocation();
     const navigate = useNavigate();
@@ -498,6 +498,19 @@ const AppWrapper = observer(() => {
                             <div
                                 label={
                                     <>
+                                        <LabelPairedHandshakeCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Manual Trading' />
+                                    </>
+                                }
+                                id='id-manual-trading'
+                            />
+                            <div
+                                label={
+                                    <>
                                         <LabelPairedMagnifyingGlassPlusCaptionRegularIcon
                                             height='24px'
                                             width='24px'
@@ -516,19 +529,6 @@ const AppWrapper = observer(() => {
                                     <AnalysisTool />
                                 </Suspense>
                             </div>
-                            <div
-                                label={
-                                    <>
-                                        <LabelPairedHandshakeCaptionRegularIcon
-                                            height='24px'
-                                            width='24px'
-                                            fill='var(--text-general)'
-                                        />
-                                        <Localize i18n_default_text='Manual Trading' />
-                                    </>
-                                }
-                                id='id-manual-trading'
-                            />
                         </Tabs>
                         {!isDesktop && right_tab_shadow && <span className='tabs-shadow tabs-shadow--right' />}{' '}
                     </div>
