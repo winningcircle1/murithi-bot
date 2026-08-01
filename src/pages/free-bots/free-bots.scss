@@ -1,0 +1,43 @@
+.free-bots {
+    padding: 1.6rem;
+    overflow-y: auto;
+    height: 100%;
+
+    &__header {
+        margin-bottom: 1.6rem;
+
+        .text:first-child {
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 1.6rem;
+        border: 1px solid var(--border-normal);
+        border-radius: 8px;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    &__item-name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__item-error {
+        width: 100%;
+    }
+}

@@ -32,12 +32,16 @@ import {
 } from '@/utils/trade-type-modal-handler';
 import {
     LabelPairedChartLineCaptionRegularIcon,
+    LabelPairedHandshakeCaptionRegularIcon,
+    LabelPairedMagnifyingGlassPlusCaptionRegularIcon,
     LabelPairedObjectsColumnCaptionRegularIcon,
     LabelPairedPuzzlePieceTwoCaptionBoldIcon,
+    LabelPairedSquareListCaptionRegularIcon,
 } from '@deriv/quill-icons/LabelPaired';
 import { LegacyGuide1pxIcon } from '@deriv/quill-icons/Legacy';
 import { Localize, localize } from '@deriv-com/translations';
 import { useDevice } from '@deriv-com/ui';
+import { getAuthInfo } from '@/external/deriv-core';
 import RunPanel from '../../components/run-panel';
 import ChartModal from '../chart/chart-modal';
 import Dashboard from '../dashboard';
@@ -46,6 +50,8 @@ import './main.scss';
 
 const ChartWrapper = lazy(() => import('../chart/chart-wrapper'));
 const Tutorial = lazy(() => import('../tutorials'));
+const FreeBots = lazy(() => import('../free-bots'));
+const AnalysisTool = lazy(() => import('../analysis-tool'));
 
 const AppWrapper = observer(() => {
     const { connectionStatus } = useApiBase();
@@ -76,9 +82,9 @@ const AppWrapper = observer(() => {
         [key: string]: string;
     };
     const { clear } = summary_card;
-    const { DASHBOARD, BOT_BUILDER } = DBOT_TABS;
+    const { DASHBOARD, BOT_BUILDER, MANUAL_TRADING } = DBOT_TABS;
     const init_render = React.useRef(true);
-    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial'];
+    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial', 'free_bots', 'analysis_tool', 'manual_trading'];
     const { isDesktop } = useDevice();
     const location = useLocation();
     const navigate = useNavigate();
@@ -144,7 +150,7 @@ const AppWrapper = observer(() => {
 
     React.useEffect(() => {
         const el_dashboard = document.getElementById('id-dbot-dashboard');
-        const el_tutorial = document.getElementById('id-tutorials');
+        const el_tutorial = document.getElementById(TAB_IDS[TAB_IDS.length - 1]);
 
         const observer_dashboard = new window.IntersectionObserver(
             ([entry]) => {
@@ -341,8 +347,24 @@ const AppWrapper = observer(() => {
         };
     }, [dashboard_strategies, active_tab]);
 
+    const handleManualTradingRedirect = React.useCallback(() => {
+        const auth_info = getAuthInfo();
+        const account_id = localStorage.getItem('active_loginid') || '';
+        const account_type = account_id.startsWith('VRT') || account_id.startsWith('VRTC') ? 'demo' : 'real';
+        const base_url = 'https://murithi-site.pages.dev/';
+        const params = new URLSearchParams();
+        if (auth_info?.access_token) params.set('access_token', auth_info.access_token);
+        if (account_id) params.set('account_id', account_id);
+        params.set('account_type', account_type);
+        window.location.href = `${base_url}?${params.toString()}`;
+    }, []);
+
     const handleTabChange = React.useCallback(
         (tab_index: number) => {
+            if (tab_index === MANUAL_TRADING) {
+                handleManualTradingRedirect();
+                return;
+            }
             setActiveTab(tab_index);
             const el_id = TAB_IDS[tab_index];
             if (el_id) {
@@ -353,7 +375,7 @@ const AppWrapper = observer(() => {
             }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [active_tab]
+        [active_tab, MANUAL_TRADING, handleManualTradingRedirect]
     );
 
     // [AI]
@@ -452,6 +474,61 @@ const AppWrapper = observer(() => {
                                     </Suspense>
                                 </div>
                             </div>
+                            <div
+                                label={
+                                    <>
+                                        <LabelPairedSquareListCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Free Bots' />
+                                    </>
+                                }
+                                id='id-free-bots'
+                            >
+                                <Suspense
+                                    fallback={
+                                        <ChunkLoader message={localize('Please wait, loading free bots...')} />
+                                    }
+                                >
+                                    <FreeBots />
+                                </Suspense>
+                            </div>
+                            <div
+                                label={
+                                    <>
+                                        <LabelPairedMagnifyingGlassPlusCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Analysis Tool' />
+                                    </>
+                                }
+                                id='id-analysis-tool'
+                            >
+                                <Suspense
+                                    fallback={
+                                        <ChunkLoader message={localize('Please wait, loading analysis tool...')} />
+                                    }
+                                >
+                                    <AnalysisTool />
+                                </Suspense>
+                            </div>
+                            <div
+                                label={
+                                    <>
+                                        <LabelPairedHandshakeCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Manual Trading' />
+                                    </>
+                                }
+                                id='id-manual-trading'
+                            />
                         </Tabs>
                         {!isDesktop && right_tab_shadow && <span className='tabs-shadow tabs-shadow--right' />}{' '}
                     </div>
