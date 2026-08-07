@@ -246,9 +246,22 @@ class APIBase {
                 localStorage.removeItem('account_type');
                 localStorage.removeItem('accountsList');
                 localStorage.removeItem('clientAccounts');
+
+                // Stop here instead of falling through to init(true) below --
+                // the session was just cleared, so an immediate reconnect
+                // attempt has no valid auth and would just fail again,
+                // restarting the same retry storm against a rate-limited API.
+                return;
             }
 
-            this.init(true);
+            // Back off before retrying instead of re-hitting the endpoint
+            // immediately on every failure. Without this, a rate-limited
+            // (429) accounts request gets retried as fast as the socket can
+            // fail and close, which only makes the rate limit worse.
+            const delay_ms = Math.min(1000 * 2 ** (this.reconnection_attempts - 1), 8000);
+            setTimeout(() => {
+                this.init(true);
+            }, delay_ms);
         }
     };
 

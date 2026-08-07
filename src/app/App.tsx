@@ -98,6 +98,12 @@ function App() {
                 const accounts = await DerivWSAccountsService.fetchAccountsList(bridgeToken);
                 if (accounts && accounts.length > 0) {
                     storeDerivAccounts(accounts);
+                    // Also populate DerivWSAccountsService's own sessionStorage cache so its
+                    // getAuthenticatedWebSocketURL() optimization (skip re-fetch if already
+                    // stored) actually applies. Without this, the WS init flow triggered by
+                    // api_base.init() below re-fetches the same accounts list a second time
+                    // on every single load, doubling requests to a rate-limited endpoint.
+                    DerivWSAccountsService.storeAccounts(accounts);
                     const requestedAccountId = urlParams.get('account_id');
                     const matchedAccount = accounts.find(a => a.account_id === requestedAccountId) || accounts[0];
                     setActiveLoginId(matchedAccount.account_id);
