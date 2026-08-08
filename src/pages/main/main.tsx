@@ -32,6 +32,7 @@ import {
 } from '@/utils/trade-type-modal-handler';
 import {
     LabelPairedChartLineCaptionRegularIcon,
+    LabelPairedCircleDotCaptionRegularIcon,
     LabelPairedCopyCaptionRegularIcon,
     LabelPairedHandshakeCaptionRegularIcon,
     LabelPairedMagnifyingGlassPlusCaptionRegularIcon,
@@ -54,6 +55,7 @@ const Tutorial = lazy(() => import('../tutorials'));
 const FreeBots = lazy(() => import('../free-bots'));
 const AnalysisTool = lazy(() => import('../analysis-tool'));
 const CopyTrading = lazy(() => import('../copy-trading'));
+const DigitCircles = lazy(() => import('../digit-circles'));
 
 const AppWrapper = observer(() => {
     const { connectionStatus } = useApiBase();
@@ -550,6 +552,27 @@ const AppWrapper = observer(() => {
                                     }
                                 >
                                     <CopyTrading />
+                                </Suspense>
+                            </div>
+                            <div
+                                label={
+                                    <>
+                                        <LabelPairedCircleDotCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Digit Circles' />
+                                    </>
+                                }
+                                id='id-digit-circles'
+                            >
+                                <Suspense
+                                    fallback={
+                                        <ChunkLoader message={localize('Please wait, loading digit circles...')} />
+                                    }
+                                >
+                                    <DigitCircles />
                                 </Suspense>
                             </div>
                         </Tabs>

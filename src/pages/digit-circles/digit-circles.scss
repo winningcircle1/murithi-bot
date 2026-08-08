@@ -1,0 +1,104 @@
+.digit-circles {
+    padding: 1.6rem;
+    overflow-y: auto;
+    height: 100%;
+
+    &__header {
+        margin-bottom: 1.6rem;
+
+        .text:first-child {
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    &__select {
+        padding: 0.6rem 1rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-normal);
+        background: var(--general-main-1);
+        color: var(--text-general);
+        font-size: 1.2rem;
+    }
+
+    &__mode-toggle {
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--border-normal);
+    }
+
+    &__mode-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 1.2rem;
+        background: var(--general-main-1);
+        color: var(--text-general);
+        border: none;
+        cursor: pointer;
+
+        &--active {
+            background: var(--brand-primary, #118e1c);
+            color: #ffffff;
+        }
+    }
+
+    &__stream {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        overflow-x: auto;
+        padding: 1.6rem 0.4rem;
+        scroll-behavior: smooth;
+    }
+
+    &__waiting {
+        white-space: nowrap;
+    }
+
+    &__circle {
+        flex-shrink: 0;
+        width: 3.6rem;
+        height: 3.6rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #ffffff;
+        transition: transform 0.15s ease;
+
+        &--even {
+            background: var(--status-success, #4bb4b3);
+        }
+
+        &--odd {
+            background: var(--status-danger, #ec3f3f);
+        }
+
+        &--under {
+            background: var(--status-success, #4bb4b3);
+        }
+
+        &--over {
+            background: var(--status-danger, #ec3f3f);
+        }
+
+        &--equal {
+            background: var(--text-less-prominent, #999999);
+        }
+
+        &--latest {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 2px var(--general-main-1), 0 0 0 4px var(--brand-primary, #118e1c);
+        }
+    }
+}
