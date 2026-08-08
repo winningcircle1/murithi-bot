@@ -1,0 +1,61 @@
+.copy-trading {
+    padding: 1.6rem;
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        width: 100%;
+        max-width: 40rem;
+        margin-top: 2.4rem;
+    }
+
+    &__title {
+        display: block;
+        margin-bottom: 0.8rem;
+    }
+
+    &__description {
+        display: block;
+        margin-bottom: 2.4rem;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    &__label {
+        font-size: 1.2rem;
+        color: var(--text-less-prominent, #999999);
+    }
+
+    &__input {
+        padding: 0.8rem 1.2rem;
+        border-radius: 4px;
+        border: 1px solid var(--border-normal, #d1d5db);
+        background: var(--general-main-1);
+        color: var(--text-general);
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    &__submit-button {
+        width: 100%;
+        max-width: 20rem;
+    }
+
+    &__status {
+        margin-top: 0.8rem;
+
+        &--success {
+            color: var(--status-success, #4bb4b3);
+        }
+
+        &--error {
+            color: var(--status-danger, #ec3f3f);
+        }
+    }
+}

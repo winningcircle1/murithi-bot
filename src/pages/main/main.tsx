@@ -32,6 +32,7 @@ import {
 } from '@/utils/trade-type-modal-handler';
 import {
     LabelPairedChartLineCaptionRegularIcon,
+    LabelPairedCopyCaptionRegularIcon,
     LabelPairedHandshakeCaptionRegularIcon,
     LabelPairedMagnifyingGlassPlusCaptionRegularIcon,
     LabelPairedObjectsColumnCaptionRegularIcon,
@@ -52,6 +53,7 @@ const ChartWrapper = lazy(() => import('../chart/chart-wrapper'));
 const Tutorial = lazy(() => import('../tutorials'));
 const FreeBots = lazy(() => import('../free-bots'));
 const AnalysisTool = lazy(() => import('../analysis-tool'));
+const CopyTrading = lazy(() => import('../copy-trading'));
 
 const AppWrapper = observer(() => {
     const { connectionStatus } = useApiBase();
@@ -527,6 +529,27 @@ const AppWrapper = observer(() => {
                                     }
                                 >
                                     <AnalysisTool />
+                                </Suspense>
+                            </div>
+                            <div
+                                label={
+                                    <>
+                                        <LabelPairedCopyCaptionRegularIcon
+                                            height='24px'
+                                            width='24px'
+                                            fill='var(--text-general)'
+                                        />
+                                        <Localize i18n_default_text='Copy Trading' />
+                                    </>
+                                }
+                                id='id-copy-trading'
+                            >
+                                <Suspense
+                                    fallback={
+                                        <ChunkLoader message={localize('Please wait, loading copy trading...')} />
+                                    }
+                                >
+                                    <CopyTrading />
                                 </Suspense>
                             </div>
                         </Tabs>
