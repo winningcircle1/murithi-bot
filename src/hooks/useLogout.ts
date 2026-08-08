@@ -41,6 +41,13 @@ export const useLogout = () => {
                     ErrorLogger.error('Logout', 'Failed to clear all storage', finalError);
                 }
             }
+        } finally {
+            // The bot app has no login screen of its own -- always send the
+            // user back to the main site's login/landing page after logout,
+            // regardless of which clearing path above ran. Without this,
+            // nothing here reacts to the cleared session: the app just keeps
+            // showing the dashboard as if still logged in.
+            window.location.href = 'https://murithi-site.pages.dev/';
         }
     }, [client]);
 };
