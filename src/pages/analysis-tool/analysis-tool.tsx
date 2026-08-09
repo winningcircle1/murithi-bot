@@ -111,10 +111,10 @@ const AnalysisTool = observer(() => {
     return (
         <div className='analysis-tool'>
             <div className='analysis-tool__header'>
-                <Text size='s' weight='bold'>
+                <Text as='h2' size='s' weight='bold' className='analysis-tool__title'>
                     <Localize i18n_default_text='Analysis Tool' />
                 </Text>
-                <Text size='xs' color='less-prominent'>
+                <Text as='p' size='xs' color='less-prominent' className='analysis-tool__description'>
                     <Localize
                         i18n_default_text='Last digit stats over the most recent {{count}} ticks'
                         values={{ count: stats.total || TICK_COUNT }}

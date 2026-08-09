@@ -49,10 +49,10 @@ const FreeBots = observer(() => {
     return (
         <div className='free-bots'>
             <div className='free-bots__header'>
-                <Text size='s' weight='bold'>
+                <Text as='h2' size='s' weight='bold' className='free-bots__title'>
                     <Localize i18n_default_text='Free Bots' />
                 </Text>
-                <Text size='xs' color='less-prominent'>
+                <Text as='p' size='xs' color='less-prominent' className='free-bots__description'>
                     <Localize i18n_default_text='Pick a ready-made strategy and load it straight into Bot Builder.' />
                 </Text>
             </div>

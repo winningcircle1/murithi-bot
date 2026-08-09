@@ -5,11 +5,15 @@
 
     &__header {
         margin-bottom: 1.6rem;
+    }
 
-        .text:first-child {
-            display: block;
-            margin-bottom: 0.4rem;
-        }
+    &__title {
+        display: block;
+        margin-bottom: 0.4rem;
+    }
+
+    &__description {
+        display: block;
     }
 
     &__list {
