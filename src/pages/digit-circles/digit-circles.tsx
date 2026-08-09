@@ -119,10 +119,10 @@ const DigitCircles = observer(() => {
     return (
         <div className='digit-circles'>
             <div className='digit-circles__header'>
-                <Text size='s' weight='bold'>
+                <Text as='h2' size='s' weight='bold' className='digit-circles__title'>
                     <Localize i18n_default_text='Digit Circles' />
                 </Text>
-                <Text size='xs' color='less-prominent'>
+                <Text as='p' size='xs' color='less-prominent' className='digit-circles__description'>
                     <Localize
                         i18n_default_text='Live last-digit stream, most recent {{count}} ticks'
                         values={{ count: CIRCLE_COUNT }}
