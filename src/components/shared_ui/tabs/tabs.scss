@@ -128,6 +128,20 @@
         }
     }
 
+    // Without min-height: 0, this grid item (the direct parent of every
+    // tab's content) refuses to shrink below its content's natural height,
+    // so any tab whose content is taller than the viewport just pushes the
+    // whole layout taller instead of scrolling -- and since the outer .main
+    // wrapper has overflow: hidden, that extra content gets silently
+    // clipped with no scrollbar anywhere. This is a standard CSS grid/flex
+    // gotcha; min-height: 0 lets the grid row's 1fr sizing actually apply,
+    // and each tab's own overflow-y: auto (e.g. .free-bots, .analysis-tool)
+    // then works as intended.
+    &__content {
+        min-height: 0;
+        overflow: hidden;
+    }
+
     &__active {
         font-weight: 700;
         color: var(--text-prominent);

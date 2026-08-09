@@ -3,19 +3,6 @@
     overflow-y: auto;
     height: 100%;
 
-    &__header {
-        margin-bottom: 2rem;
-    }
-
-    &__title {
-        display: block;
-        margin-bottom: 0.6rem;
-    }
-
-    &__description {
-        display: block;
-    }
-
     &__search {
         position: relative;
         max-width: 32rem;
@@ -60,6 +47,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
         gap: 1.2rem;
+        padding-bottom: 2rem;
     }
 
     &__card {
@@ -80,13 +68,9 @@
     }
 
     &__card-icon {
-        width: 3.6rem;
-        height: 3.6rem;
-        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--general-hover, rgba(17, 142, 28, 0.12));
         margin-bottom: 1.2rem;
     }
 

@@ -6,11 +6,49 @@ import Text from '@/components/shared_ui/text';
 import { save_types } from '@/external/bot-skeleton/constants/save-type';
 import { DBOT_TABS } from '@/constants/bot-contents';
 import { useStore } from '@/hooks/useStore';
-import { LabelPairedGearCaptionRegularIcon } from '@deriv/quill-icons/LabelPaired';
+import {
+    TradeTypesAccumulatorBreakOutIcon,
+    TradeTypesDigitsDiffersIcon,
+    TradeTypesDigitsEvenIcon,
+    TradeTypesDigitsMatchesIcon,
+    TradeTypesDigitsOddIcon,
+    TradeTypesDigitsOverIcon,
+    TradeTypesDigitsUnderIcon,
+    TradeTypesHighsAndLowsHigherIcon,
+    TradeTypesHighsAndLowsLowerIcon,
+    TradeTypesMultipliersDownIcon,
+    TradeTypesMultipliersUpIcon,
+    TradeTypesTurboLongIcon,
+    TradeTypesTurboShortIcon,
+    TradeTypesUpsAndDownsFallIcon,
+    TradeTypesUpsAndDownsRiseIcon,
+} from '@deriv/quill-icons/TradeTypes';
 import { StandaloneSearchRegularIcon } from '@deriv/quill-icons/Standalone';
 import { Localize, localize } from '@deriv-com/translations';
 import { FREE_BOTS } from './bots-manifest';
 import './free-bots.scss';
+
+// A varied set of trade-type badge icons -- purely decorative here, cycled
+// deterministically per card (by index) so each bot gets a distinct icon and
+// the same bot always shows the same one, rather than reusing one repeated
+// icon for all 20 strategies.
+const CARD_ICONS = [
+    TradeTypesDigitsOverIcon,
+    TradeTypesDigitsUnderIcon,
+    TradeTypesDigitsEvenIcon,
+    TradeTypesDigitsOddIcon,
+    TradeTypesDigitsMatchesIcon,
+    TradeTypesDigitsDiffersIcon,
+    TradeTypesHighsAndLowsHigherIcon,
+    TradeTypesHighsAndLowsLowerIcon,
+    TradeTypesUpsAndDownsRiseIcon,
+    TradeTypesUpsAndDownsFallIcon,
+    TradeTypesMultipliersUpIcon,
+    TradeTypesMultipliersDownIcon,
+    TradeTypesTurboLongIcon,
+    TradeTypesTurboShortIcon,
+    TradeTypesAccumulatorBreakOutIcon,
+];
 
 const FreeBots = observer(() => {
     const { load_modal, dashboard } = useStore();
@@ -57,15 +95,6 @@ const FreeBots = observer(() => {
 
     return (
         <div className='free-bots'>
-            <div className='free-bots__header'>
-                <Text as='h2' size='s' weight='bold' className='free-bots__title'>
-                    <Localize i18n_default_text='Free Bots' />
-                </Text>
-                <Text as='p' size='xs' color='less-prominent' className='free-bots__description'>
-                    <Localize i18n_default_text='Pick a ready-made strategy and load it straight into Bot Builder.' />
-                </Text>
-            </div>
-
             <div className='free-bots__search'>
                 <StandaloneSearchRegularIcon
                     height='18px'
@@ -88,32 +117,31 @@ const FreeBots = observer(() => {
                 </Text>
             ) : (
                 <div className='free-bots__grid'>
-                    {filtered_bots.map(bot => (
-                        <div key={bot.id} className='free-bots__card'>
-                            <div className='free-bots__card-icon'>
-                                <LabelPairedGearCaptionRegularIcon
-                                    height='20px'
-                                    width='20px'
-                                    fill='var(--brand-primary, #118e1c)'
-                                />
-                            </div>
-                            <Text size='xs' weight='bold' className='free-bots__card-name'>
-                                {bot.name}
-                            </Text>
-                            <Button
-                                secondary
-                                is_loading={loading_id === bot.id}
-                                onClick={() => handleLoad(bot)}
-                                text={localize('Load')}
-                                className='free-bots__card-button'
-                            />
-                            {error_id === bot.id && (
-                                <Text size='xxs' color='loss-danger' className='free-bots__card-error'>
-                                    <Localize i18n_default_text='Could not load this bot. Try again.' />
+                    {filtered_bots.map((bot, index) => {
+                        const CardIcon = CARD_ICONS[index % CARD_ICONS.length];
+                        return (
+                            <div key={bot.id} className='free-bots__card'>
+                                <div className='free-bots__card-icon'>
+                                    <CardIcon iconSize='sm' />
+                                </div>
+                                <Text size='xs' weight='bold' className='free-bots__card-name'>
+                                    {bot.name}
                                 </Text>
-                            )}
-                        </div>
-                    ))}
+                                <Button
+                                    secondary
+                                    is_loading={loading_id === bot.id}
+                                    onClick={() => handleLoad(bot)}
+                                    text={localize('Load')}
+                                    className='free-bots__card-button'
+                                />
+                                {error_id === bot.id && (
+                                    <Text size='xxs' color='loss-danger' className='free-bots__card-error'>
+                                        <Localize i18n_default_text='Could not load this bot. Try again.' />
+                                    </Text>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </div>
