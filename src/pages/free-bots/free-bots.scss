@@ -1,7 +1,18 @@
 .free-bots {
+    // .dc-tabs__content (the direct parent of every tab's page) is
+    // display: flex. Without this, .free-bots -- a flex item with no
+    // explicit width -- shrinks to fit its own content instead of
+    // stretching to fill the row. That's what made the grid below collapse
+    // to a single minimum-width column with a huge empty gap next to it on
+    // wide screens: with no definite container width to divide up,
+    // grid-template-columns: repeat(auto-fill, ...) has nothing to fill.
+    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
     padding: 2rem;
     overflow-y: auto;
     height: 100%;
+    box-sizing: border-box;
 
     &__search {
         position: relative;
